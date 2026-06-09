@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HPC Applications &amp; Frontiers — A Book — Built From Scratch</title>
+<meta name="description" content="An original, from-scratch book I'm writing to learn the applications and frontiers of high-performance computing: GPUs, MPI at scale, real-world domains, deep learning, quantum and neuromorphic computing." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --accent:#dc2626; --accent-soft:#fdeaea; --ink:#16201f; --muted:#5d6b69;
+    --line:#dfe5e3; --bg:#fbfcfb; --card:#ffffff;
+    --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 28px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);padding:.1em .4em;border-radius:4px;color:#b51d1d}
+  h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.15;letter-spacing:-.01em}
+  /* Header */
+  header.hero{padding:88px 0 56px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 22px}
+  h1{font-size:clamp(2.6rem,6vw,4.1rem);margin:0 0 18px}
+  .lede{font-size:1.22rem;color:var(--muted);max-width:62ch;margin:0 0 28px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;font-size:.82rem}
+  .chip{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--muted);background:var(--card)}
+  /* Sections */
+  section{padding:54px 0;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+  h2{font-size:clamp(1.7rem,3.4vw,2.3rem);margin:0 0 20px}
+  h3{font-size:1.2rem;margin:0 0 6px}
+  p{margin:0 0 18px;max-width:68ch}
+  .muted{color:var(--muted)}
+  /* Stack grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px}
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .tool .t{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em;margin-bottom:8px}
+  .tool h3{font-size:1.05rem;font-family:var(--sans);font-weight:600;margin-bottom:6px}
+  .tool p{font-size:.92rem;color:var(--muted);margin:0}
+  /* Pipeline / modules */
+  ol.flow{counter-reset:s;list-style:none;padding:0;margin:24px 0 0}
+  ol.flow li{position:relative;padding:18px 0 18px 56px;border-top:1px solid var(--line)}
+  ol.flow li:before{counter-increment:s;content:counter(s,decimal-leading-zero);position:absolute;left:0;top:18px;font-family:var(--mono);font-size:.8rem;color:var(--accent);border:1px solid var(--line);border-radius:8px;width:38px;height:38px;display:grid;place-items:center;background:var(--card)}
+  ol.flow li h3{font-family:var(--sans);font-size:1.02rem;font-weight:600;margin:0 0 4px}
+  ol.flow li p{margin:0;font-size:.93rem;color:var(--muted)}
+  .tag{display:inline-block;font-family:var(--mono);font-size:.68rem;padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:middle}
+  .tag.on{background:#e6f7ec;color:#1c7a43}
+  .tag.off{background:#fdecea;color:#b23b2c}
+  /* Callout */
+  .callout{background:var(--accent-soft);border:1px solid #f5cccc;border-radius:14px;padding:24px 26px;margin-top:8px}
+  .callout p:last-child{margin:0}
+  /* Reflection list */
+  ul.learn{list-style:none;padding:0;margin:8px 0 0}
+  ul.learn li{padding:14px 0 14px 30px;border-top:1px solid var(--line);position:relative;color:var(--muted);max-width:68ch}
+  ul.learn li:before{content:"→";position:absolute;left:0;color:var(--accent);font-family:var(--mono)}
+  ul.learn li b{color:var(--ink);font-weight:600}
+  /* Footer */
+  footer{padding:48px 0 80px}
+  .credit{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
+  .credit .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  footer .fine{font-size:.8rem;color:var(--muted);margin-top:22px;text-align:center}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">From-Scratch Build · HPC Curriculum</p>
+    <h1>HPC Applications &amp; Frontiers — A Book</h1>
+    <p class="lede">The second book I'm writing from scratch to learn high-performance computing — where the foundations get pointed at real problems: fluid dynamics, climate, finance, health, deep learning at scale, and the frontier of quantum and neuromorphic machines. My own chapters, examples and design.</p>
+    <div class="meta">
+      <span class="chip">Advanced MPI</span><span class="chip">GPUs / FPGAs</span><span class="chip">Hybrid computing</span>
+      <span class="chip">Deep learning at scale</span><span class="chip">Digital twins</span><span class="chip">Quantum / Neuromorphic</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">What it is</p>
+    <h2>Where HPC meets the real world</h2>
+    <p>This is the companion to my foundations volume. Where the first book teaches the machinery — architecture, parallelism, OpenMP and MPI — this one asks the harder question: <b>what is all that power actually for?</b> I wrote it to learn how supercomputing turns into real science and engineering.</p>
+    <p>The chapters split into two halves. The first sharpens the tools — advanced MPI and OpenMP, accelerators like GPUs and FPGAs, hybrid programming, and serious code optimisation. The second points those tools at <i>domains</i>: simulating airflow, modelling the climate, pricing in finance, analysing the brain, training neural networks across many GPUs, and finally the emerging machines — quantum and neuromorphic — that may be the next frontier.</p>
+    <div class="callout">
+      <p><b>The core idea I wanted to learn:</b> the hardest part of applied HPC isn't the physics or the model — it's mapping a real problem onto thousands of processors so it actually scales. Every domain chapter is really a lesson in decomposing a problem until the machine can chew through it.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">The toolkit</p>
+    <h2>Tools &amp; techniques under the hood</h2>
+    <p class="muted">Each was new to me, and each unlocks a different class of problem. Here is what each one actually does.</p>
+    <div class="grid">
+      <div class="tool"><div class="t">scaling</div><h3>Advanced MPI</h3><p>Non-blocking communication, collectives and topologies — the techniques that keep message passing efficient when you go from a handful of processes to thousands.</p></div>
+      <div class="tool"><div class="t">accelerators</div><h3>GPUs &amp; FPGAs</h3><p>Specialised processors for massive parallelism. GPUs for data-parallel maths; FPGAs for custom, reconfigurable hardware pipelines.</p></div>
+      <div class="tool"><div class="t">hybrid</div><h3>MPI + OpenMP + GPU</h3><p>Real clusters mix all three layers at once. Hybrid patterns let one program use shared memory, message passing and accelerators together.</p></div>
+      <div class="tool"><div class="t">orchestration</div><h3>Workflow automation</h3><p>Large scientific runs are pipelines, not single jobs. Orchestration tools chain steps, manage data and make runs reproducible.</p></div>
+      <div class="tool"><div class="t">ML at scale</div><h3>Distributed deep learning</h3><p>Training one model across many GPUs and nodes by splitting the data or the model itself — the same HPC ideas applied to neural networks.</p></div>
+      <div class="tool"><div class="t">frontier</div><h3>Quantum &amp; neuromorphic</h3><p>The emerging paradigms: qubits exploiting superposition, and brain-inspired chips that compute with spikes instead of clocks.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">The chapters</p>
+    <h2>How the book is structured</h2>
+    <p>The volume climbs from advanced technique, through applied domains, to the genuine frontier. The final stage is where I'm still drafting — fittingly, it's the part nobody has fully figured out either.</p>
+    <ol class="flow">
+      <li><h3>Advanced parallel technique <span class="tag on">drafted</span></h3><p>Deeper OpenMP and MPI, plus accelerators and FPGAs — pushing the foundations to their limits.</p></li>
+      <li><h3>Optimisation &amp; data structures <span class="tag on">drafted</span></h3><p>Tuning code for real architectures and choosing data layouts that the hardware can actually fly through.</p></li>
+      <li><h3>Workflows &amp; orchestration <span class="tag on">drafted</span></h3><p>Turning one-off runs into automated, reproducible pipelines across a cluster.</p></li>
+      <li><h3>Simulation domains <span class="tag on">drafted</span></h3><p>Computational fluid dynamics and climate / terrestrial modelling — classic HPC workloads written out as case studies.</p></li>
+      <li><h3>Data-driven domains <span class="tag on">drafted</span></h3><p>Finance, health and neuroscience, plus deep learning at scale: where HPC meets large data and AI.</p></li>
+      <li><h3>The frontier <span class="tag off">drafting</span></h3><p>Digital twins, neuromorphic computing and quantum computing — the chapters I'm still actively writing.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">How I work on it</p>
+    <h2>From a domain to a chapter</h2>
+    <p>Each applied chapter follows the same loop — pick a real problem, find the parallel structure hiding in it, and only then write:</p>
+    <ul class="learn">
+      <li><b>Find the parallelism:</b> before any code, I work out what part of the problem is independent and can be split across processors. That decomposition is the whole chapter.</li>
+      <li><b>Build a minimal model:</b> I write the smallest runnable version that captures the domain — a tiny CFD grid, a toy training loop — and scale it up until it strains.</li>
+      <li><b>Explain the trade-offs:</b> every domain forces a different balance of compute, communication and memory; the chapter isn't done until I can say which dominates and why.</li>
+    </ul>
+    <p class="muted" style="margin-top:18px">The chapters live as notebooks so the science, the code and the results stay together — read the problem, then watch a scaled-down version actually run with <code>mpirun</code> or on a GPU.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Reflection</p>
+    <h2>What writing it taught me</h2>
+    <ul class="learn">
+      <li><b>Every domain is the same problem in a costume.</b> CFD, finance and deep learning all reduce to "decompose, distribute, communicate as little as possible" — once I saw that, the field unified.</li>
+      <li><b>Communication is the enemy of scale.</b> Adding processors only helps until they spend all their time talking; advanced MPI is mostly about talking less.</li>
+      <li><b>Deep learning is just HPC with a friendlier name.</b> Training across many GPUs is the same data/model decomposition I'd learned for scientific simulation.</li>
+      <li><b>The frontier is humbling.</b> Writing the quantum and neuromorphic chapters showed me how young these paradigms are — and how much of HPC is still being invented.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="credit">
+      <div class="k">About this build</div>
+      <p style="margin:0">An original, from-scratch project by <b>Andrea</b> — the second volume in a book I'm writing to teach myself high-performance computing, this one focused on real applications and the emerging frontier. Plain HTML/CSS, deployed on GitHub Pages.</p>
+    </div>
+    <p class="fine">Built from scratch by Andrea · one of an ongoing series of learning builds.</p>
+  </div>
+</footer>
+</body>
+</html>
